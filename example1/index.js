@@ -1,9 +1,8 @@
-// add an entry to the document
-function addEntry (s) {
-  const p = document.createElement('pre')
-  p.appendChild(document.createTextNode(s))
-  document.getElementById('log').appendChild(p)
-}
+function addEntry(err) {
+
+  $("#err").text(err)
+
+} 
 
 async function run() {
   const id = nats.nuid.next()
@@ -30,23 +29,18 @@ async function run() {
         }, 1000)
       })
 
-      nc.subscribe('who', () => {
-          nc.publish('here', id)
+      $("#btnSend").on("click", (e)=> {
+        nc.publish('msg', $("#newMessage").val())
       })
 
-      let i = 0
-      nc.subscribe('>', (err, m) => {
-        if (err) {
-          console.log('error', err)
-          return
-        }
-        i++
-        addEntry(`[${i}] ${m.subject}: ${m.data}`)
+      nc.subscribe('msg', (m, err) => {
+         $("#chatHistory").text(m.data)
       })
+
       await nc.flush()
 
-      nc.publish('entered', id)
-      nc.publish('who')
+      // nc.publish('entered', id)
+      // nc.publish('who')
     })
     .catch((err) => {
       addEntry(`error connecting: ${err.toString()}`)

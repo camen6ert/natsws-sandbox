@@ -5,8 +5,8 @@ const fs = require('fs')
 const path = require('path')
 
 const opts = {
-  key: fs.readFileSync(path.join('../certs/key.pem')),
-  cert: fs.readFileSync(path.join('../certs/cert.pem'))
+  key: fs.readFileSync(path.join('../localhost+1-key.pem')),
+  cert: fs.readFileSync(path.join('../localhost+1.pem'))
 }
 
 const CONTENT_ROOT = path.join(__dirname, '../content')

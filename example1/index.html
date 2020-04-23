@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sandbox</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.0.slim.js"
+        integrity="sha256-sCexhaKpAfuqulKjtSY7V9H7QT0TCN90H+Y5NlmqOUE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+    <div class="container" id="log">
+        <nav class=" teal lighten-2">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Nats Messenger</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down"></ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col s12" id="err">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <span id="chatHistory">
+
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s8">
+                <input id="newMessage" type="text" class="validate">
+                <label for="newMessage"></label>
+            </div>
+            <div class="col s4">
+                <a class="waves-effect waves-light btn" id="btnSend">send</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="nats.js"></script>
+<script src="index.js"></script>
+
+</html>
