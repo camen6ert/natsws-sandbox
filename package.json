@@ -16,11 +16,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com//aricart/nats-wsdemo"
+    "url": "https://github.com//camen6ert/nats-wsdemo"
   },
   "author": "NATS Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "nats.ws": "^1.0.0-16"
+    "nats.ws": "^1.0.0-17"
   }
 }
