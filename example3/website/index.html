@@ -2,12 +2,15 @@
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
+    <script src="nats.js"></script>
 </head>
 
 <body>
     <script>
         let app = new PIXI.Application({ width: 1024, height: 800 });
         document.body.appendChild(app.view);
+
+        const graphics = new PIXI.Graphics();
 
         const Payload = nats.Payload
         const me = Date.now()
@@ -26,13 +29,52 @@
                 console.log("close")
             })
 
+            conn.publish('newPlayer', { name: 'bertram' })
+
+            targets = {};
             // the chat application listens for messages sent under the subject 'chat'
-            conn.subscribe('', (_, msg) => {
-                addEntry(msg.data.id === me ? `(me): ${msg.data.m}` : `(${msg.data.id}): ${msg.data.m}`)
-            })
+            conn.subscribe('newTarget', (_, msg) => {
+
+                cont = new PIXI.Container();
+                cont.setTransform(msg.data.x, msg.data.y);
+
+                const graphics = new PIXI.Graphics();
+                graphics.beginFill(0xDE3249, 1);
+                graphics.drawCircle(0, 0, msg.data.r);
+                graphics.endFill();
+                graphics.interactive = true;
+
+                click = (d,c, g) => {
+                    g.on('click', (event) => {
+                        console.log(d);
+                        conn.publish('targetHitted', d.id)
+                        console.log(g.Parent);
+                        app.stage.removeChild(c);
+
+                    })
+                }
+
+                click(msg.data, cont, graphics)
+
+                cont.addChild(graphics);
+
+                app.stage.addChild(cont);
+                
+                targets[msg.data.id] = {
+                    data: msg.data,
+                    cont: cont,
+                };
+            });
+
+            conn.subscribe('targetHitted', (_, msg) => {
+                app.stage.removeChild(targets[msg.data].cont);
+                delete targets[msg.data];
+            });
 
             return conn
         }
+
+        init();
     </script>
 </body>
 

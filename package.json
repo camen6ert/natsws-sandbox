@@ -21,6 +21,8 @@
   "author": "NATS Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "nats.ws": "^1.0.0-17"
+    "nats": "^1.4.8",
+    "nats.ws": "^1.0.0-17",
+    "uuid": "^7.0.3"
   }
 }
