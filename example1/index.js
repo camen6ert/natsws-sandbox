@@ -1,8 +1,10 @@
 function addEntry(err) {
-
-  $("#err").text(err)
-
+  
 } 
+
+function addMsg(msg) {
+  $("#chatHistory").append("<div>"+msg+"</div><hr />")
+}
 
 async function run() {
   const id = nats.nuid.next()
@@ -30,11 +32,14 @@ async function run() {
       })
 
       $("#btnSend").on("click", (e)=> {
-        nc.publish('msg', $("#newMessage").val())
+        var v = $("#newMessage").val()
+
+        nc.publish('msg', v)
+        addMsg(v);
       })
 
       nc.subscribe('msg', (m, err) => {
-         $("#chatHistory").text(m.data)
+        addMsg(m.data)
       })
 
       await nc.flush()
